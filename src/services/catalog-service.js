@@ -2,7 +2,7 @@ const axios = require("axios").default;
 
 const api = axios.create({
     baseURL: 'https://b2c-catalog-gateway.c24.tech',
-    timeout: 1000
+    // timeout: 1000
 });
 
 const CMSService = {
