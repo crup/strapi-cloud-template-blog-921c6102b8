@@ -1,5 +1,37 @@
 import type { Schema, Attribute } from '@strapi/strapi';
 
+export interface SeoFaqList extends Schema.Component {
+  collectionName: 'components_shared_faq_lists';
+  info: {
+    displayName: 'Faq List';
+    icon: 'code';
+    description: '';
+  };
+  attributes: {
+    faq: Attribute.Component<'shared.faq', true> &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 3;
+          max: 5;
+        },
+        number
+      >;
+  };
+}
+
+export interface SharedFaq extends Schema.Component {
+  collectionName: 'components_shared_faqs';
+  info: {
+    displayName: 'faq';
+    icon: 'plus';
+  };
+  attributes: {
+    title: Attribute.Text;
+    content: Attribute.RichText;
+  };
+}
+
 export interface SharedMedia extends Schema.Component {
   collectionName: 'components_shared_media';
   info: {
@@ -65,6 +97,8 @@ export interface SharedSlider extends Schema.Component {
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
+      'seo.faq-list': SeoFaqList;
+      'shared.faq': SharedFaq;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

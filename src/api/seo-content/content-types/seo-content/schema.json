@@ -4,7 +4,8 @@
   "info": {
     "singularName": "seo-content",
     "pluralName": "seo-contents",
-    "displayName": "Seo Content"
+    "displayName": "Seo Content",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -19,6 +20,19 @@
     "top_content": {
       "type": "blocks",
       "required": true
+    },
+    "offerFaq": {
+      "type": "component",
+      "repeatable": true,
+      "component": "seo.faq-list",
+      "max": 1,
+      "required": false
+    },
+    "overrides": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::url-template.url-template",
+      "inversedBy": "seo_contents"
     }
   }
 }

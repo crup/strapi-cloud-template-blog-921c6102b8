@@ -977,6 +977,7 @@ export interface ApiSeoContentSeoContent extends Schema.CollectionType {
     singularName: 'seo-content';
     pluralName: 'seo-contents';
     displayName: 'Seo Content';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -984,6 +985,18 @@ export interface ApiSeoContentSeoContent extends Schema.CollectionType {
   attributes: {
     url: Attribute.String & Attribute.Required & Attribute.Unique;
     top_content: Attribute.Blocks & Attribute.Required;
+    offerFaq: Attribute.Component<'seo.faq-list', true> &
+      Attribute.SetMinMax<
+        {
+          max: 1;
+        },
+        number
+      >;
+    overrides: Attribute.Relation<
+      'api::seo-content.seo-content',
+      'manyToOne',
+      'api::url-template.url-template'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -995,6 +1008,59 @@ export interface ApiSeoContentSeoContent extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::seo-content.seo-content',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiUrlTemplateUrlTemplate extends Schema.CollectionType {
+  collectionName: 'url_templates';
+  info: {
+    singularName: 'url-template';
+    pluralName: 'url-templates';
+    displayName: 'Url Template';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    templateFormat: Attribute.String & Attribute.Required & Attribute.Unique;
+    blocks: Attribute.DynamicZone<
+      [
+        'seo.faq-list',
+        'shared.media',
+        'shared.rich-text',
+        'shared.seo',
+        'shared.quote',
+        'shared.slider'
+      ]
+    > &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    seo_contents: Attribute.Relation<
+      'api::url-template.url-template',
+      'oneToMany',
+      'api::seo-content.seo-content'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::url-template.url-template',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::url-template.url-template',
       'oneToOne',
       'admin::user'
     > &
@@ -1026,6 +1092,7 @@ declare module '@strapi/types' {
       'api::category.category': ApiCategoryCategory;
       'api::global.global': ApiGlobalGlobal;
       'api::seo-content.seo-content': ApiSeoContentSeoContent;
+      'api::url-template.url-template': ApiUrlTemplateUrlTemplate;
     }
   }
 }

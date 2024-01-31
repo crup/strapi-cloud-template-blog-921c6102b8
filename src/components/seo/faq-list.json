@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_faq_lists",
+  "info": {
+    "displayName": "Faq List",
+    "icon": "code",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "faq": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.faq",
+      "required": true,
+      "max": 5,
+      "min": 3
+    }
+  }
+}
